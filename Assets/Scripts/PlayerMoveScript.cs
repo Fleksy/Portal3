@@ -1,34 +1,30 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMoveScript : MonoBehaviour
 {
     public float move_Speed = 5f;
     public float rotation_Speed = 0.8f;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-      
-    }
+    private Transform camera;
 
     void FixedUpdate()
     {
-    
-        transform.Translate(new Vector3(Input.GetAxis("Horizontal"), 0.0f, Input.GetAxis("Vertical")) * move_Speed * Time.fixedDeltaTime);
-
-        transform.Rotate(0, Input.GetAxis("Mouse X") * rotation_Speed,0);
-        transform.GetChild(0).Rotate(-Input.GetAxis("Mouse Y") * rotation_Speed, 0, 0);
-        /*if (transform.GetChild(0).localRotation.eulerAngles.y != 0)
+        if (Input.GetKey(KeyCode.Escape))
         {
-            transform.GetChild(0).Rotate(Input.GetAxis("Mouse Y") * rotation_Speed, 0, 0);
-        }*/
-
-        if (transform.rotation.x !=0 )
-        {
-            transform.eulerAngles = new Vector3(0, transform.rotation.y, 0);
+            Application.Quit();
         }
-        
+        else if (Input.GetKey(KeyCode.R))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+        else
+        {
+            transform.Translate(new Vector3(Input.GetAxis("Horizontal"), 0.0f, Input.GetAxis("Vertical")) * move_Speed *
+                                Time.fixedDeltaTime);
+            transform.Rotate(0, Input.GetAxis("Mouse X") * rotation_Speed, 0);
+        }
     }
 }
